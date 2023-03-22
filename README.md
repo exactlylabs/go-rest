@@ -1,4 +1,5 @@
 # GO REST - REST API Framework in Go
+[![Go version](https://img.shields.io/badge/Go-v1.20-brightgreen)](https://go.dev/doc/install)
 
 Go REST is a REST API Framework written in Golang to help build Exactly Labs' solutions
 
