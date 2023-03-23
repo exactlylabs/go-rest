@@ -10,7 +10,7 @@ import (
 	"github.com/exactlylabs/go-rest/pkg/restapi/dependencies"
 	"github.com/exactlylabs/go-rest/pkg/restapi/paginator"
 	"github.com/exactlylabs/go-rest/pkg/restapi/webcontext"
-	"github.com/exactlylabs/mlab-mapping/backend/pkg/services/errors"
+	"github.com/exactlylabs/nuka-wellness-connect/server/pkg/services/errors"
 	"github.com/gorilla/mux"
 )
 

@@ -7,7 +7,7 @@ import (
 
 	"github.com/exactlylabs/go-rest/pkg/restapi/apierrors"
 	"github.com/exactlylabs/go-rest/pkg/restapi/webcontext"
-	"github.com/exactlylabs/mlab-mapping/backend/pkg/services/errors"
+	"github.com/exactlylabs/nuka-wellness-connect/server/pkg/services/errors"
 )
 
 const (
