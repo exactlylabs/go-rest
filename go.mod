@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/exactlylabs/go-errors v0.0.0-20230322195014-b9b8e4a5b8af
-	github.com/exactlylabs/mlab-mapping/backend v0.0.0-20230322184630-9dcfbe976afb
 	github.com/go-playground/validator/v10 v10.12.0
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0

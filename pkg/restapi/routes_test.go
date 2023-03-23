@@ -125,7 +125,7 @@ func TestCallRouteWithDependency(t *testing.T) {
 	}
 
 	api.Route("/test", route)
-	api.AddDependency(provider, testDep{})
+	api.AddDependency(provider, &testDep{})
 	api.setup()
 
 	api.callRoute(api.baseCtx, route)
@@ -161,8 +161,8 @@ func TestCallRouteWithMultipleDeps(t *testing.T) {
 		routeCalled = true
 	}
 	api.Route("/test", route)
-	api.AddDependency(provider1, testDep1{})
-	api.AddDependency(provider2, testDep2{})
+	api.AddDependency(provider1, &testDep1{})
+	api.AddDependency(provider2, &testDep2{})
 	api.setup()
 
 	api.callRoute(api.baseCtx, route)
@@ -198,4 +198,41 @@ func TestRouteWithDefaultPaginationArgsProvider(t *testing.T) {
 	}
 	api.Route("/test", route)
 	api.callRoute(ctx, route)
+}
+
+type someInterface interface {
+	DoSomething()
+	Called() bool
+}
+
+type someImpl struct {
+	called bool
+}
+
+func (s *someImpl) DoSomething() {
+	s.called = true
+}
+
+func (s *someImpl) Called() bool {
+	return s.called
+}
+
+func TestRouteWithInterfaceDependency(t *testing.T) {
+	writer := httptest.NewRecorder()
+	req := httptest.NewRequest("GET", "/test", nil)
+	var impl someInterface = &someImpl{}
+	api, _ := NewWebServer()
+
+	route := func(ctx *webcontext.Context, i someInterface) {
+		i.DoSomething()
+	}
+	api.Route("/test", route)
+	api.AddDependency(func(ctx *webcontext.Context) any {
+		return impl
+	}, impl)
+	api.callRoute(webcontext.NewTestContext(writer, req), route)
+
+	if !impl.Called() {
+		t.Errorf("expected DoSomething to be called")
+	}
 }

@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"reflect"
 
+	"github.com/exactlylabs/go-errors/pkg/errors"
 	"github.com/exactlylabs/go-rest/pkg/restapi/dependencies"
 	"github.com/exactlylabs/go-rest/pkg/restapi/paginator"
 	"github.com/exactlylabs/go-rest/pkg/restapi/webcontext"
-	"github.com/exactlylabs/nuka-wellness-connect/server/pkg/services/errors"
 	"github.com/gorilla/mux"
 )
 
@@ -66,8 +66,14 @@ func (w *WebServer) callRoute(ctx *webcontext.Context, route any) {
 	args := []reflect.Value{reflect.ValueOf(ctx)}
 	for i := 1; i < routeType.NumIn(); i++ {
 		depType := routeType.In(i)
-		if depType.Kind() == reflect.Ptr {
-			depType = depType.Elem()
+		if depType.Kind() == reflect.Interface {
+			// When it's an interface, we need to search all dependencies and find the one that implements it
+			for dType := range w.dependencies {
+				if dType.Elem().Implements(depType) || dType.ConvertibleTo(depType) {
+					depType = dType
+					break
+				}
+			}
 		}
 		provider := w.dependencies[depType]
 		args = append(args, reflect.ValueOf(provider(ctx)))
@@ -84,7 +90,6 @@ func (w *WebServer) Route(endpoint string, route any, methods ...string) {
 	w.router.HandleFunc(endpoint, func(writer http.ResponseWriter, r *http.Request) {
 		ctx := w.baseCtx.PrepareRequest(writer, r)
 		w.callRoute(ctx, route)
-		//route(ctx)
 		if err := ctx.Commit(); err != nil {
 			panic(errors.Wrap(err, "WebServer#Route Commit"))
 		}
@@ -105,8 +110,14 @@ func (w *WebServer) validateRoutesDependencies() {
 		routeType := reflect.TypeOf(route)
 		for i := 1; i < routeType.NumIn(); i++ {
 			argType := routeType.In(i)
-			if argType.Kind() == reflect.Ptr {
-				argType = argType.Elem()
+			if argType.Kind() == reflect.Interface {
+				// When it's an interface, we need to search all dependencies and find the one that implements it
+				for dType := range w.dependencies {
+					if dType.Elem().Implements(argType) || dType.ConvertibleTo(argType) {
+						argType = dType
+						break
+					}
+				}
 			}
 			if _, exists := w.dependencies[argType]; !exists {
 				panic(fmt.Errorf("restapi.WebServer validateRoutesDependencies type %s provider not found", argType))
@@ -158,9 +169,6 @@ func (w *WebServer) AddToContext(key string, value any) {
 
 func (w *WebServer) AddDependency(provider DependencyProvider, objProto any) {
 	dependencyType := reflect.TypeOf(objProto)
-	if dependencyType.Kind() == reflect.Ptr {
-		dependencyType = dependencyType.Elem()
-	}
 	if _, exists := w.dependencies[dependencyType]; exists {
 		panic(fmt.Errorf("restapi.WebServer#AddDependency %s already added", dependencyType))
 	}

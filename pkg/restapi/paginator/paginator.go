@@ -5,9 +5,9 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/exactlylabs/go-errors/pkg/errors"
 	"github.com/exactlylabs/go-rest/pkg/restapi/apierrors"
 	"github.com/exactlylabs/go-rest/pkg/restapi/webcontext"
-	"github.com/exactlylabs/nuka-wellness-connect/server/pkg/services/errors"
 )
 
 const (

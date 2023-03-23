@@ -3,8 +3,6 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/exactlylabs/go-errors v0.0.0-20230322195014-b9b8e4a5b8af h1:YNDDOrSNQVQDfXGSNK/ZFmHTpZuBG7xVPaG0Fq8GUMY=
 github.com/exactlylabs/go-errors v0.0.0-20230322195014-b9b8e4a5b8af/go.mod h1:JbgfgmjaAF4LfkuPEhU9dIo8fweP/p0VrrHW3Ll4GwY=
-github.com/exactlylabs/mlab-mapping/backend v0.0.0-20230322184630-9dcfbe976afb h1:R6mV0GL4KVcWaDLpXpM+U+TjcdzYwit4HBECOY/NOJk=
-github.com/exactlylabs/mlab-mapping/backend v0.0.0-20230322184630-9dcfbe976afb/go.mod h1:5lpp2+D/daVEQ3Z1hs5eMjvMq+4I5chr1ZgvshrkYfE=
 github.com/felixge/httpsnoop v1.0.1 h1:lvB5Jl89CsZtGIWuTcDM1E/vkVs49/Ml7JJe07l8SPQ=
 github.com/felixge/httpsnoop v1.0.1/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
 github.com/go-playground/assert/v2 v2.2.0 h1:JvknZsQTYeFEAhQwI4qEt9cyV5ONwRHC+lYKSsYSR8s=
