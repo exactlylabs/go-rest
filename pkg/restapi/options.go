@@ -1,6 +1,12 @@
 package restapi
 
-import "github.com/gorilla/handlers"
+import (
+	"github.com/gorilla/handlers"
+	"go.opentelemetry.io/otel/propagation"
+	"go.opentelemetry.io/otel/trace"
+)
+
+var defaultPropagator = propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{})
 
 type ServerOption func(server *WebServer) error
 
@@ -14,6 +20,26 @@ func WithRecoveryMiddleware(middleware Middleware) ServerOption {
 func WithRequestLoggerMiddleware(middleware Middleware) ServerOption {
 	return func(server *WebServer) error {
 		server.loggerMiddleware = middleware
+		return nil
+	}
+}
+
+// WithTracing option adds an OpenTelemetry's tracing SDK implementation to the server
+func WithTracing(traceName string, tp trace.TracerProvider) ServerOption {
+	return func(server *WebServer) error {
+		server.tracerProvider = tp
+		if server.propagator == nil {
+			server.propagator = defaultPropagator
+		}
+		server.baseCtx.Tracer = server.tracerProvider.Tracer(traceName)
+		return nil
+	}
+}
+
+// WithTracePropagator replaces the default propagator with the one provided
+func WithTracePropagator(propagator propagation.TextMapPropagator) ServerOption {
+	return func(server *WebServer) error {
+		server.propagator = propagator
 		return nil
 	}
 }

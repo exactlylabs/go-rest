@@ -12,6 +12,9 @@ import (
 	"github.com/exactlylabs/go-rest/pkg/restapi/paginator"
 	"github.com/exactlylabs/go-rest/pkg/restapi/webcontext"
 	"github.com/gorilla/mux"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
+	"go.opentelemetry.io/otel/trace"
 )
 
 type DependencyProvider func(ctx *webcontext.Context) any
@@ -25,6 +28,8 @@ type WebServer struct {
 	baseCtx            *webcontext.Context
 	routes             []any
 	dependencies       map[reflect.Type]DependencyProvider
+	tracerProvider     trace.TracerProvider
+	propagator         propagation.TextMapPropagator
 	setupCalled        bool
 }
 
@@ -41,8 +46,12 @@ func NewWebServer(options ...ServerOption) (*WebServer, error) {
 	for _, opt := range options {
 		err := opt(server)
 		if err != nil {
-			return nil, errors.Wrap(err, "restapi.NewWebServer %T", opt)
+			return nil, errors.Wrap(err, fmt.Sprintf("restapi.NewWebServer %T", opt))
 		}
+	}
+	if server.tracerProvider == nil {
+		server.tracerProvider = otel.GetTracerProvider()
+		server.baseCtx.Tracer = server.tracerProvider.Tracer("github.com/exactlylabs/go-rest/pkg/restapi")
 	}
 	server.AddDependency(dependencies.PaginationArgsProvider, &paginator.PaginationArgs{})
 	return server, nil

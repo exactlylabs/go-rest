@@ -11,6 +11,7 @@ import (
 	"github.com/exactlylabs/go-errors/pkg/errors"
 	"github.com/exactlylabs/go-rest/pkg/restapi/apierrors"
 	"github.com/gorilla/mux"
+	"go.opentelemetry.io/otel/trace"
 	"golang.org/x/sync/syncmap"
 )
 
@@ -23,6 +24,7 @@ type Context struct {
 	err          *apierrors.APIError
 	statusCode   int
 	URLParams    map[string]string
+	Tracer       trace.Tracer
 }
 
 func New() *Context {
