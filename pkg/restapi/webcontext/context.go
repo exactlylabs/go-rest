@@ -2,6 +2,7 @@ package webcontext
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -16,6 +17,7 @@ import (
 )
 
 type Context struct {
+	context.Context
 	tmpWriter    io.ReadWriter
 	Writer       http.ResponseWriter
 	Request      *http.Request
@@ -29,7 +31,15 @@ type Context struct {
 
 func New() *Context {
 	return &Context{
-		meta: syncmap.Map{},
+		Context: context.Background(),
+		meta:    syncmap.Map{},
+	}
+}
+
+func NewWithContext(ctx context.Context) *Context {
+	return &Context{
+		Context: ctx,
+		meta:    syncmap.Map{},
 	}
 }
 
