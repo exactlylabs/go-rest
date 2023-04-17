@@ -5,8 +5,8 @@ github.com/exactlylabs/go-errors v0.0.1 h1:Qi/b/aBYhKR4eEARtZdhXTo+44YtR643KSa7D
 github.com/exactlylabs/go-errors v0.0.1/go.mod h1:JbgfgmjaAF4LfkuPEhU9dIo8fweP/p0VrrHW3Ll4GwY=
 github.com/exactlylabs/go-monitor v0.0.1 h1:stVRxcTjikDz+EcAc1I6thICdSdnAmyyYl4Si5R4Gws=
 github.com/exactlylabs/go-monitor v0.0.1/go.mod h1:FLq9dN37od2NdkU7SBOudhDEIF2naW+ucgMyjSw6lFc=
-github.com/felixge/httpsnoop v1.0.1 h1:lvB5Jl89CsZtGIWuTcDM1E/vkVs49/Ml7JJe07l8SPQ=
 github.com/felixge/httpsnoop v1.0.1/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
+github.com/felixge/httpsnoop v1.0.3 h1:s/nj+GCswXYzN5v2DpNMuMQYe+0DDwt5WVCU6CWBdXk=
 github.com/getsentry/sentry-go v0.19.0 h1:BcCH3CN5tXt5aML+gwmbFwVptLLQA+eT866fCO9wVOM=
 github.com/getsentry/sentry-go v0.19.0/go.mod h1:y3+lGEFEFexZtpbG1GUE2WD/f9zGyKYwpEqryTOC/nE=
 github.com/go-errors/errors v1.4.2 h1:J6MZopCL4uSllY1OfXM374weqZFFItUbrImctkmUxIA=

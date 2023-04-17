@@ -39,7 +39,7 @@ func main() {
 		panic(err)
 	}
 
-	api.Route("", DirectPanic)
+	api.Route("/", DirectPanic)
 	api.Route("/without-go-errors", WithoutGoErrors)
 	api.Route("/with-go-errors", WithGoErrors)
 	api.Run("127.0.0.1:5000")
