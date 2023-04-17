@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/exactlylabs/go-errors/pkg/errors"
+	"github.com/exactlylabs/go-monitor/pkg/tracing"
 	"github.com/exactlylabs/go-rest/pkg/restapi/dependencies"
 	"github.com/exactlylabs/go-rest/pkg/restapi/paginator"
 	"github.com/exactlylabs/go-rest/pkg/restapi/webcontext"
@@ -50,8 +51,7 @@ func NewWebServer(options ...ServerOption) (*WebServer, error) {
 		}
 	}
 	if server.tracerProvider == nil {
-		server.tracerProvider = otel.GetTracerProvider()
-		server.baseCtx.Tracer = server.tracerProvider.Tracer("github.com/exactlylabs/go-rest/pkg/restapi")
+		WithTracing("github.com/exactlylabs/go-rest/pkg/restapi", otel.GetTracerProvider())(server)
 	}
 	server.AddDependency(dependencies.PaginationArgsProvider, &paginator.PaginationArgs{})
 	return server, nil
@@ -143,6 +143,9 @@ func (w *WebServer) setup() {
 	}
 	// Ensure the first middlewares are always the logging and recovery
 	handler = w.loggerMiddleware(w.recoveryMiddleware(handler))
+	// Run before the logger, to include the context
+	handler = tracing.OtelTracerMiddleware("", w.tracerProvider, w.propagator)(handler)
+
 	w.server = &http.Server{
 		Handler: handler,
 	}

@@ -36,13 +36,6 @@ func New() *Context {
 	}
 }
 
-func NewWithContext(ctx context.Context) *Context {
-	return &Context{
-		Context: ctx,
-		meta:    syncmap.Map{},
-	}
-}
-
 func NewTestContext(writer http.ResponseWriter, r *http.Request) *Context {
 	wc := New().PrepareRequest(writer, r)
 	return wc
@@ -61,6 +54,7 @@ func (wc *Context) PrepareRequest(w http.ResponseWriter, r *http.Request) *Conte
 		tmpWriter:    bytes.NewBuffer(nil),
 		statusCode:   200,
 		URLParams:    urlParams,
+		Context:      r.Context(),
 	}
 }
 
