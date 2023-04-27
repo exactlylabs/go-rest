@@ -186,3 +186,11 @@ func (w *WebServer) AddDependency(provider DependencyProvider, objProto any) {
 	}
 	w.dependencies[dependencyType] = provider
 }
+
+func (w *WebServer) InjectAsDependency(objects ...any) {
+	for _, obj := range objects {
+		w.AddDependency(func(ctx *webcontext.Context) any {
+			return obj
+		}, obj)
+	}
+}
