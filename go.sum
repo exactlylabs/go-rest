@@ -1,8 +1,8 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/exactlylabs/go-errors v0.0.1 h1:Qi/b/aBYhKR4eEARtZdhXTo+44YtR643KSa7Dog4nUs=
-github.com/exactlylabs/go-errors v0.0.1/go.mod h1:JbgfgmjaAF4LfkuPEhU9dIo8fweP/p0VrrHW3Ll4GwY=
+github.com/exactlylabs/go-errors v0.0.2 h1:1027rcDf8/0nRdooF5yllNV+BtAg6Lr9qS3NH87WpPA=
+github.com/exactlylabs/go-errors v0.0.2/go.mod h1:T1BpfYWTYfnolGrSw/nT4S6PZ+TC4uXCKqvjfCj/OTc=
 github.com/exactlylabs/go-monitor v0.0.3 h1:MSoojurL6RPeKowmsqA0ATlAHCLWxPcx2KpoTOsXSZ4=
 github.com/exactlylabs/go-monitor v0.0.3/go.mod h1:gQmRlUcAJcaKIt6kAgEmVEsjaqpqgJxD67xcn1R5p+0=
 github.com/felixge/httpsnoop v1.0.1/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=

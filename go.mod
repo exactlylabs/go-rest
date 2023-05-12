@@ -3,7 +3,7 @@ module github.com/exactlylabs/go-rest
 go 1.18
 
 require (
-	github.com/exactlylabs/go-errors v0.0.1
+	github.com/exactlylabs/go-errors v0.0.2
 	github.com/exactlylabs/go-monitor v0.0.3
 	github.com/go-playground/validator/v10 v10.12.0
 	github.com/gorilla/handlers v1.5.1
