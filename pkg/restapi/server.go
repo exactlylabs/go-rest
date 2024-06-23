@@ -79,6 +79,7 @@ func (w *WebServer) callRoute(ctx *webcontext.Context, route any) {
 			// When it's an interface, we need to search all dependencies and find the one that implements it
 			for dType := range w.dependencies {
 				if dType.Elem().Implements(depType) || dType.ConvertibleTo(depType) {
+					log.Println("Found dependency", dType, "for", depType)
 					depType = dType
 					break
 				}
@@ -181,6 +182,7 @@ func (w *WebServer) AddToContext(key string, value any) {
 
 func (w *WebServer) AddDependency(provider DependencyProvider, objProto any) {
 	dependencyType := reflect.TypeOf(objProto)
+	log.Println("Adding dependency", dependencyType)
 	if _, exists := w.dependencies[dependencyType]; exists {
 		panic(fmt.Errorf("restapi.WebServer#AddDependency %s already added", dependencyType))
 	}
@@ -189,8 +191,9 @@ func (w *WebServer) AddDependency(provider DependencyProvider, objProto any) {
 
 func (w *WebServer) InjectAsDependency(objects ...any) {
 	for _, obj := range objects {
+		o := obj
 		w.AddDependency(func(ctx *webcontext.Context) any {
-			return obj
-		}, obj)
+			return o
+		}, o)
 	}
 }
